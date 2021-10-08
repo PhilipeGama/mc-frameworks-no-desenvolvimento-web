@@ -1,22 +1,23 @@
 package ifam.edu.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name="pessoa")
 public class Pessoa {
+
+	@Id
+	@GeneratedValue
+	private Integer id;
+
+	@Column(unique = true, nullable = false)
+	private String documento;
 
 	private String nome;
 	private String endereco;
 	private String telefone;
 
-	public Pessoa(){}
-
-	@Id
-	@GeneratedValue
-	private Integer id;
+	public Pessoa() {
+	}
 
 	public Pessoa(String nome, String endereco, String telefone) {
 		this.nome = nome;
@@ -24,12 +25,23 @@ public class Pessoa {
 		this.telefone = telefone;
 	}
 
+	@ManyToOne
+	private Cidade cidade;
+
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	public String getEndereco() {
@@ -48,6 +60,14 @@ public class Pessoa {
 		this.telefone = telefone;
 	}
 
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
 
 	@Override
 	public String toString() {

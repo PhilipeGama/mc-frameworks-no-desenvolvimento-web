@@ -4,7 +4,7 @@ curso:
 data de inicio
 
 ## aula 01
-### ws-framework-2
+### ws-framework-1
 
 ## aula 02
 ### ws-framework-2
@@ -21,22 +21,25 @@ https://dev.mysql.com/downloads/connector/j/
 
 cria um arquivo em src/META-INF/persistence.xml
 
-`xml
-	<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd http://xmlns.jcp.org/xml/ns/persistence ">
-	<persistence-unit name="JPAAula" transaction-type="RESOURCE_LOCAL">
-	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-	<properties>
-	<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-	<property name="hibernate.connection.username" value="root"/>
-	<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-	<property name="hibernate.connection.password" value="password"/>
-	<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ifam"/>
-	<property name="hibernate.hbm2ddl.auto" value="update"/>
-	<property name="hibernate.show_sql" value="true"/>
-	<property name="hibernate.format_sql" value="true"/>
-	</properties>
-	</persistence-unit>
-	</persistence>
-`
+```xml
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd http://xmlns.jcp.org/xml/ns/persistence ">
+<persistence-unit name="JPAAula" transaction-type="RESOURCE_LOCAL">
+<provider>org.hibernate.ejb.HibernatePersistence</provider>
+<properties>
+<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+<property name="hibernate.connection.username" value="root"/>
+<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+<property name="hibernate.connection.password" value="password"/>
+<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ifam"/>
+<property name="hibernate.hbm2ddl.auto" value="update"/>
+<property name="hibernate.show_sql" value="true"/>
+<property name="hibernate.format_sql" value="true"/>
+</properties>
+</persistence-unit>
+</persistence>
+```
 
+## aula 03
+### ws-framework-2
 
+https://jamboard.google.com/d/1wAL3-Q1x6Q0QvCkZbuF2OCOmVFkzFVSRUsSMbzKRrjM/viewer?f=0
