@@ -9,6 +9,8 @@ http://xmlns.jcp.org/xml/ns/persistence ">
     <persistence-unit name="JPAAula" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
+        <class>Pessoa</class>
+
         <properties>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
             <property name="hibernate.connection.username" value="root"/>
