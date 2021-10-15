@@ -1,11 +1,8 @@
 package ifam.edu.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
+@Entity(name="cidade")
 public class Cidade {
 
     @Id
@@ -15,7 +12,14 @@ public class Cidade {
     @Column(unique = true, nullable = false)
     private String nome;
 
+    @ManyToOne
+    private Estado estado;
+
     public Cidade() {
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getNome() {
@@ -24,5 +28,13 @@ public class Cidade {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }

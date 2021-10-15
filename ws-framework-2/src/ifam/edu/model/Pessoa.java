@@ -28,6 +28,10 @@ public class Pessoa {
 	@ManyToOne
 	private Cidade cidade;
 
+	public Integer getId() {
+		return id;
+	}
+
 	public String getNome() {
 		return nome;
 	}
