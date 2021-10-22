@@ -8,6 +8,13 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class EstadoDAO {
+
+    private EntityManager entityManager;
+
+    public EstadoDAO(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     public void salvar(Estado estado){
         EntityManager entityManager = JPAUtil.getEntityManager();
 

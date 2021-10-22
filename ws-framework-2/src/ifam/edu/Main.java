@@ -1,6 +1,7 @@
 package ifam.edu;
 
 import ifam.edu.dao.CidadeDAO;
+import ifam.edu.dao.DAOGenerico;
 import ifam.edu.dao.EstadoDAO;
 import ifam.edu.model.Cidade;
 import ifam.edu.model.Estado;
@@ -13,8 +14,7 @@ import java.util.List;
 public class Main {
 
 
-
-    public static void inserirPessoaComCidadeNoBD(){
+    public static void inserirPessoaComCidadeNoBD() {
         EntityManager em = JPAUtil.getEntityManager();
 
         Estado estado = new Estado();
@@ -56,22 +56,22 @@ public class Main {
         em.close();
     }
 
-    public static void consultar(){
+    public static void consultar() {
         EntityManager em = JPAUtil.getEntityManager();
         Cidade cidade = em.find(Cidade.class, 1);
 
-        System.out.println("Cidade - Id"+cidade.getId());
-        System.out.println("Cidade - Nome"+cidade.getNome());
+        System.out.println("Cidade - Id" + cidade.getId());
+        System.out.println("Cidade - Nome" + cidade.getNome());
 
         Pessoa pessoa = em.find(Pessoa.class, 1);
 
-        System.out.println("Pessoa - Id"+cidade.getId());
-        System.out.println("Pessoa - Nome"+pessoa.getNome());
-        System.out.println("Pessoa - Cidade"+pessoa.getCidade().getNome());
-        System.out.println("Pessoa - Estado"+pessoa.getCidade().getEstado().getNome());
+        System.out.println("Pessoa - Id" + cidade.getId());
+        System.out.println("Pessoa - Nome" + pessoa.getNome());
+        System.out.println("Pessoa - Cidade" + pessoa.getCidade().getNome());
+        System.out.println("Pessoa - Estado" + pessoa.getCidade().getEstado().getNome());
     }
 
-    private static void remover(){
+    private static void remover() {
 
         //Removendo do BD
 
@@ -83,87 +83,90 @@ public class Main {
         em.getTransaction().commit();
     }
 
-    public static void inserirEstadoAtravesDoDao(){
+    public static void inserirEstadoAtravesDoDao() {
 
         Estado estado = new Estado();
         estado.setSigla("SC");
         estado.setNome("Espírito Santos");
 
+        EntityManager entityManager = JPAUtil.getEntityManager();
 
-        EstadoDAO dao = new EstadoDAO();
+        //Injeção de Dependência (Dependece Injection - DI)
+        EstadoDAO dao = new EstadoDAO(entityManager);
+
+        entityManager.getTransaction().begin();
         dao.salvar(estado);
+        entityManager.getTransaction().commit();
+        entityManager.close();
 
     }
 
-    public static void consultarEstadoAtravesDoDao(){
+    public static void consultarEstadoAtravesDoDao() {
 
-        EstadoDAO dao = new EstadoDAO();
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EstadoDAO dao = new EstadoDAO(entityManager);
+
+        entityManager.getTransaction().begin();
 
         Estado estado = dao.consultar(22);
         System.out.println(estado.toString());
 
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+
     }
 
-    public static void removerEstadoAtravesDoDao(){
+    public static void removerEstadoAtravesDoDao() {
 
-        EstadoDAO dao = new EstadoDAO();
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EstadoDAO dao = new EstadoDAO(entityManager);
+
+        entityManager.getTransaction().begin();
+
         dao.remover(20);
 
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+
     }
 
-    public static void listarEstadoAtravesDoDao(){
-        EstadoDAO dao = new EstadoDAO();
+    public static void listarEstadoAtravesDoDao() {
+
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EstadoDAO dao = new EstadoDAO(entityManager);
+
         List<Estado> estados = dao.listar();
 
-        for (Estado estado: estados){
+        for (Estado estado : estados) {
             System.out.println(estado.toString());
         }
-    }
-
-    public static void inserirCidadeAtravesDoDao(){
-
-        EstadoDAO estadoDAO = new EstadoDAO();
-        Estado estado = estadoDAO.consultar(23);
-
-        Cidade cidade = new Cidade("Florianopolis",estado);
-
-        CidadeDAO dao = new CidadeDAO();
-        dao.salvar(cidade);
+        entityManager.close();
 
     }
 
-    public static void consultarCidadeAtravesDoDao(){
+    public static void inserirAtravesDAOGenerico() {
 
-        CidadeDAO dao = new CidadeDAO();
+        Estado estado = new Estado();
+        estado.setSigla("RJ");
+        estado.setNome("Rio de Janeiro");
 
-        Cidade cidade = dao.consultar(20);
-        System.out.println(cidade.toString());
+        EntityManager entityManager = JPAUtil.getEntityManager();
+
+        //Injeção de Dependência (Dependece Injection - DI)
+        DAOGenerico dao = new DAOGenerico<Estado>(entityManager, Estado.class);
+
+        entityManager.getTransaction().begin();
+        dao.salvar(estado);
+        entityManager.getTransaction().commit();
+        entityManager.close();
 
     }
 
-    public static void removerCidadeAtravesDoDao(){
-
-        EstadoDAO dao = new EstadoDAO();
-        dao.remover(25);
-
-    }
-
-    public static void listarCidadeAtravesDoDao(){
-        EstadoDAO dao = new EstadoDAO();
-        List<Estado> estados = dao.listar();
-
-        for (Estado estado: estados){
-            System.out.println(estado.toString());
-        }
-    }
 
     public static void main(String[] args) {
 
-        //inserirPessoaComCidadeNoBD();
-        //consultar();
-        //remover();
-//
-//      Estado estado = new Estado("Rio de Janeiro","RJ");
 
 //      Estado DAO
 //        inserirEstadoAtravesDoDao();
@@ -171,9 +174,11 @@ public class Main {
 //        removerEstadoAtravesDoDao();
 //        listarEstadoAtravesDoDao();
 
-//      Estado DAO
-//      inserirCidadeAtravesDoDao();
-//        consultarCidadeAtravesDoDao();
+        //Generico DAO
+
+
+//      DAO Generic
+        inserirAtravesDAOGenerico();
     }
 
 }
