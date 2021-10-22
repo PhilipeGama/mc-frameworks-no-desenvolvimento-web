@@ -3,9 +3,11 @@ package ifam.edu;
 import ifam.edu.dao.CidadeDAO;
 import ifam.edu.dao.DAOGenerico;
 import ifam.edu.dao.EstadoDAO;
+import ifam.edu.dao.PessoaDAO;
 import ifam.edu.model.Cidade;
 import ifam.edu.model.Estado;
 import ifam.edu.model.Pessoa;
+import ifam.edu.model.SexoEnum;
 import ifam.edu.util.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -21,18 +23,17 @@ public class Main {
         estado.setNome("Amazonas");
         estado.setSigla("AM");
 
-//        Cidade cidade = new Cidade();
-//        cidade.setNome("Manaus");
-//        cidade.setEstado(estado);
-
         //Transient
         Pessoa pessoa = new Pessoa();
-        pessoa.setNome("Jose");
-        pessoa.setDocumento("2345678");
-        pessoa.setEndereco("Rua A");
-        pessoa.setTelefone("3233-5678");
+        pessoa.setNome("Paula");
+        pessoa.setDocumento("2212112");
+        pessoa.setTelefone("3113-5678");
+        pessoa.setSexo(SexoEnum.FEMININO);
 
-        Cidade cidade = em.find(Cidade.class, 10);
+        Cidade cidade = new Cidade();
+        cidade.setEstado(estado);
+        cidade.setNome("Manaus");
+
 
 
         pessoa.setCidade(cidade);
@@ -45,12 +46,12 @@ public class Main {
         em.persist(estado);
 
         //Persistindo Cidade (Managed)
-        //em.persist(cidade);
+        em.persist(cidade);
 
         //cidade.setNome("Belem Atualizado");
 
         //Persistindo Pessoa (Managed)
-//        em.persist(pessoa);
+       em.persist(pessoa);
         em.getTransaction().commit();
 
         em.close();
@@ -155,18 +156,46 @@ public class Main {
         EntityManager entityManager = JPAUtil.getEntityManager();
 
         //Injeção de Dependência (Dependece Injection - DI)
-        DAOGenerico dao = new DAOGenerico<Estado>(entityManager, Estado.class);
+        DAOGenerico<Estado> estadoDAO = new DAOGenerico<>(entityManager, Estado.class);
 
         entityManager.getTransaction().begin();
-        dao.salvar(estado);
+        estadoDAO.salvar(estado);
         entityManager.getTransaction().commit();
         entityManager.close();
 
     }
 
+    public static void listaPorNomeAtravesPessoaDAO(){
+        EntityManager entityManager = JPAUtil.getEntityManager();
+
+        PessoaDAO pessoaDAO = new PessoaDAO(entityManager);
+        List<Pessoa> pessoas = pessoaDAO.listarPorNomeParcial("P");
+
+        for(Pessoa p:pessoas){
+            System.out.println(p);
+        }
+        entityManager.close();;
+    }
+
+
+    public static void testandoEnumeration(){
+        Pessoa pessoa1 = new Pessoa();
+
+        pessoa1.setNome("Jose");
+        pessoa1.setTelefone("3222-1156");
+        pessoa1.setSexo(SexoEnum.MASCULINO);
+
+        Pessoa pessoa2 = new Pessoa();
+        pessoa2.setNome("Julianna");
+        pessoa2.setSexo(SexoEnum.FEMININO);
+
+        System.out.println("Pessoa: "+pessoa1.getNome()+", "+pessoa1.getSexo());
+        System.out.println("Pessoa: "+pessoa2.getNome()+", "+pessoa2.getSexo());
+    }
 
     public static void main(String[] args) {
-
+// Pessoa DAO
+      //  inserirPessoaComCidadeNoBD();
 
 //      Estado DAO
 //        inserirEstadoAtravesDoDao();
@@ -178,7 +207,9 @@ public class Main {
 
 
 //      DAO Generic
-        inserirAtravesDAOGenerico();
+//        inserirAtravesDAOGenerico();
+listaPorNomeAtravesPessoaDAO();
+        //testandoEnumeration();
     }
 
 }

@@ -13,15 +13,17 @@ public class Pessoa {
 	private String documento;
 
 	private String nome;
-	private String endereco;
 	private String telefone;
+
+
+	@Enumerated(EnumType.ORDINAL)
+	private SexoEnum sexo;
 
 	public Pessoa() {
 	}
 
-	public Pessoa(String nome, String endereco, String telefone) {
+	public Pessoa(String nome, String telefone) {
 		this.nome = nome;
-		this.endereco = endereco;
 		this.telefone = telefone;
 	}
 
@@ -48,14 +50,6 @@ public class Pessoa {
 		this.documento = documento;
 	}
 
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
 	public String getTelefone() {
 		return telefone;
 	}
@@ -73,11 +67,22 @@ public class Pessoa {
 		this.cidade = cidade;
 	}
 
-	@Override
-	public String toString() {
-		return "Pessoa [nome=" + nome
-				+ ", endereco=" + endereco
-				+ ", telefone=" + telefone;
+	public SexoEnum getSexo() {
+		return sexo;
 	}
 
+	public void setSexo(SexoEnum sexo) {
+		this.sexo = sexo;
+	}
+
+	@Override
+	public String toString() {
+		return "Pessoa{" +
+				"documento='" + documento + '\'' +
+				", nome='" + nome + '\'' +
+				", telefone='" + telefone + '\'' +
+				", sexo=" + sexo +
+				", cidade=" + cidade +
+				'}';
+	}
 }
