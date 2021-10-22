@@ -18,6 +18,11 @@ public class Cidade {
     public Cidade() {
     }
 
+    public Cidade(String nome, Estado estado) {
+        this.nome = nome;
+        this.estado = estado;
+    }
+
     public Integer getId() {
         return id;
     }

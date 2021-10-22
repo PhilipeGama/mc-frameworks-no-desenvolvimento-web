@@ -43,3 +43,7 @@ cria um arquivo em src/META-INF/persistence.xml
 ### ws-framework-2
 
 https://jamboard.google.com/d/1wAL3-Q1x6Q0QvCkZbuF2OCOmVFkzFVSRUsSMbzKRrjM/viewer?f=0
+
+
+## aula 04
+### ws-framework-2

@@ -1,14 +1,14 @@
 package ifam.edu;
 
+import ifam.edu.dao.CidadeDAO;
+import ifam.edu.dao.EstadoDAO;
 import ifam.edu.model.Cidade;
 import ifam.edu.model.Estado;
 import ifam.edu.model.Pessoa;
 import ifam.edu.util.JPAUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.sql.SQLOutput;
+import java.util.List;
 
 public class Main {
 
@@ -83,12 +83,97 @@ public class Main {
         em.getTransaction().commit();
     }
 
+    public static void inserirEstadoAtravesDoDao(){
+
+        Estado estado = new Estado();
+        estado.setSigla("SC");
+        estado.setNome("Espírito Santos");
+
+
+        EstadoDAO dao = new EstadoDAO();
+        dao.salvar(estado);
+
+    }
+
+    public static void consultarEstadoAtravesDoDao(){
+
+        EstadoDAO dao = new EstadoDAO();
+
+        Estado estado = dao.consultar(22);
+        System.out.println(estado.toString());
+
+    }
+
+    public static void removerEstadoAtravesDoDao(){
+
+        EstadoDAO dao = new EstadoDAO();
+        dao.remover(20);
+
+    }
+
+    public static void listarEstadoAtravesDoDao(){
+        EstadoDAO dao = new EstadoDAO();
+        List<Estado> estados = dao.listar();
+
+        for (Estado estado: estados){
+            System.out.println(estado.toString());
+        }
+    }
+
+    public static void inserirCidadeAtravesDoDao(){
+
+        EstadoDAO estadoDAO = new EstadoDAO();
+        Estado estado = estadoDAO.consultar(23);
+
+        Cidade cidade = new Cidade("Florianopolis",estado);
+
+        CidadeDAO dao = new CidadeDAO();
+        dao.salvar(cidade);
+
+    }
+
+    public static void consultarCidadeAtravesDoDao(){
+
+        CidadeDAO dao = new CidadeDAO();
+
+        Cidade cidade = dao.consultar(20);
+        System.out.println(cidade.toString());
+
+    }
+
+    public static void removerCidadeAtravesDoDao(){
+
+        EstadoDAO dao = new EstadoDAO();
+        dao.remover(25);
+
+    }
+
+    public static void listarCidadeAtravesDoDao(){
+        EstadoDAO dao = new EstadoDAO();
+        List<Estado> estados = dao.listar();
+
+        for (Estado estado: estados){
+            System.out.println(estado.toString());
+        }
+    }
+
     public static void main(String[] args) {
 
         //inserirPessoaComCidadeNoBD();
         //consultar();
-        remover();
+        //remover();
+//
+//      Estado estado = new Estado("Rio de Janeiro","RJ");
 
+//      Estado DAO
+//        inserirEstadoAtravesDoDao();
+//        consultarEstadoAtravesDoDao();
+//        removerEstadoAtravesDoDao();
+//        listarEstadoAtravesDoDao();
+
+//      Estado DAO
+//      inserirCidadeAtravesDoDao();
+//        consultarCidadeAtravesDoDao();
     }
 
 }

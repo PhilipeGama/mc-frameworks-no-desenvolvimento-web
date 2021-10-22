@@ -13,10 +13,30 @@ public class Estado {
     private Integer id;
 
     @Column(unique = true, nullable = false)
-    private String nome;
+    private String sigla;
 
     @Column(unique = true, nullable = false)
-    private String sigla;
+    private String nome;
+
+    public Estado() {
+    }
+
+    public Estado(String sigla, String nome) {
+        this.sigla = sigla;
+        this.nome = nome;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
 
     public String getNome() {
         return nome;
@@ -26,11 +46,12 @@ public class Estado {
         this.nome = nome;
     }
 
-    public String getSigla() {
-        return sigla;
-    }
-
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
+    @Override
+    public String toString() {
+        return "Estado{" +
+                "id=" + id +
+                ", sigla='" + sigla + '\'' +
+                ", nome='" + nome + '\'' +
+                '}';
     }
 }
